@@ -1,6 +1,7 @@
 #!/usr/bin/make -f
 
 DIR := debian/tmp
+OCAML_VERSION ?= $(shell ocaml -vnum)
 OCAML_DIR := /opt/opam/${OCAML_VERSION}
 VYCONF := usr/libexec/vyos/vyconf
 VYCONF_CONF := $(VYCONF)/config
