@@ -5,6 +5,7 @@ OCAML_VERSION ?= $(shell ocaml -vnum)
 OCAML_DIR := /opt/opam/${OCAML_VERSION}
 VYCONF := usr/libexec/vyos/vyconf
 VYCONF_CONF := $(VYCONF)/config
+VYCONF_SESSION := $(VYCONF)/session
 VYCONF_DATA := usr/share/vyos/vyconf
 VYCONF_DEF := etc/vyos
 
@@ -12,10 +13,11 @@ VYCONF_DEF := etc/vyos
 	dh $@ --with quilt
 
 override_dh_auto_build:
-	./build.sh $(DIR)
+	eval $$(opam env --root=/opt/opam --set-root) && ./build.sh $(DIR)
 
 override_dh_auto_install:
 	mkdir -p $(DIR)/$(VYCONF_CONF)
+	mkdir -p $(DIR)/$(VYCONF_SESSION)
 	mkdir -p $(DIR)/$(VYCONF_DATA)
 	mkdir -p $(DIR)/$(VYCONF_DEF)
 	cp $(OCAML_DIR)/share/vyconf/vyconf.proto $(DIR)/$(VYCONF_DATA)
